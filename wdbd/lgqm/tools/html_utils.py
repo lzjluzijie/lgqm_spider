@@ -36,3 +36,5 @@ def get_soup(url, encoding="utf-8"):
         # print(soup.prettify())
         return soup
 
+if __name__ == "__main__":
+    print("hello")

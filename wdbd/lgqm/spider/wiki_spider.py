@@ -44,6 +44,7 @@ def get_tongren_list():
     return:
     """
     # 同人作品列表页面
+    # http://lgqm.huijiwiki.com/wiki/同人作品列表
     URL =  "http://lgqm.huijiwiki.com/wiki/%E5%90%8C%E4%BA%BA%E4%BD%9C%E5%93%81%E5%88%97%E8%A1%A8"
     soup = html_utils.get_soup(URL)
 
