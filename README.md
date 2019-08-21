@@ -2,6 +2,8 @@
 
  临高启明 同人小说 爬取软件
 
+ 2019.8.20 本项目改变，改为一个爬虫代码集合项目
+
 [TOC]
 
 # 开发路线图
@@ -15,12 +17,9 @@
 - wdbd.lgqm 主包
   - tools 工具函数包
   - spider 爬虫程序包
+- wdbd.spider.xmly 喜马拉雅爬虫代码包
 
-
-
-
-
-
-
-
-
+## 依赖包：
+在标准的Anaconda3环境下，还需要：
+- requests
+- pypinyin
