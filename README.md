@@ -18,6 +18,8 @@
   - tools 工具函数包
   - spider 爬虫程序包
 - wdbd.spider.xmly 喜马拉雅爬虫代码包
+- wdbd.spider.lpr 市场贷款利率爬取代码包
+
 
 ## 依赖包：
 在标准的Anaconda3环境下，还需要：
