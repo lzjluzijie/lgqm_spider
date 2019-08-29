@@ -31,9 +31,10 @@ from sqlalchemy.ext.declarative import declarative_base
 # =====================================================================================
 # 全局常量：
 
+# 默认日志名
 LOGGER_NAME = 'wdbd'
-
-PROJECT_NAME = 'fd'
+# 项目名
+PROJECT_NAME = 'lgqm_spider'
 
 # sqlalchemy是否输出SQL明细日志
 sqlalchemy_echo = False
@@ -63,6 +64,12 @@ Base = declarative_base()
 # =====================================================================================
 # 基础服务函数
 
+# 日志API
+def l():
+    return logger()
+
+
+
 # 项目根路径
 def get_project_root_path():
     """
@@ -75,21 +82,6 @@ def get_project_root_path():
     return root_path
 
 
-# 当前目录绝对路径
-def get_current_path():
-    """
-    取得当前的绝对路径
-
-    支持win / mac 操作系统
-
-    如 c:\\fdsafs\\ 或 /User/jack/prjects/
-
-    :return: str，绝对路径
-    """
-    return os.getcwd() + os.path.sep
-
-
-# =====================================================================================
 # 数据库工具
 
 # 获得数据库连接
