@@ -14,8 +14,13 @@ import openpyxl
 import xlrd
 import datetime, time
 
-
+# excel文件下载地址：
+# year:yyyy格式的年份
+# month:一位数字的月份 FIXME
 URL_EXCEL= "http://www.shibor.org/shibor/web/html/downLoad.html?nameNew=Historical_LPR_Data_{year}_{month}.xls&nameOld=LPR%CA%FD%BE%DD2019_8.xls&shiborSrc=http%3A%2F%2Fwww.shibor.org%2Fshibor%2F&downLoadPath=data"
+
+# 全局工具类
+
 
 
 def spider_server_start():
@@ -52,27 +57,29 @@ def load_history(year_month):
     # # FIXME 下载失败处理！
 
     # 解析
-    # https://www.cnblogs.com/insane-Mr-Li/p/9092619.html
-    wb = xlrd.open_workbook( "c:\\foo\\lpr.xls" )
-    ws = wb.sheets()[0] 
-    # print( ws.name )
-    # 遍历：
-    for row in range(1, ws.nrows):
-        # cell = ws.cell(row, 0)
-        # print( ws.cell_type(row, 0) )
-        if ws.cell_type(row, 0) == 3:
-            dt_cell = xlrd.xldate_as_tuple(ws.cell(row, 0).value, wb.datemode)
-            # date_tmp = datetime.datetime(dt_cell)
-            date_tmp = datetime.date(*dt_cell[:3]).strftime("%Y%m%d")  
-            print( date_tmp )
-        # if cell.
-        # dt_cell = xldate_as_tuple(ws.cell(row, 0), 0)
-        # # print( ws.cell(row, 0).value )
-        # print( dt_cell )
+    # [ {'date'='20190101', '1Y'='', '1Y'=None}  ]
+    data = []
+    try:
+        wb = xlrd.open_workbook( "c:\\foo\\lpr.xls" )
+        ws = wb.sheet_by_name('Sheet1')
+        if not ws:
+            print('未能找到Sheet1的数据表')
+        else:
+            for row_index, row in enumerate(ws.get_rows()):
+                record = {}
+                if row_index >= 1:
+                    date_obj = xlrd.xldate.xldate_as_datetime(ws.cell_value(row_index, 0), 0)
+                    record["date"] = date_obj.strftime('%Y%m%d')
+                    record["1Y"] = ws.cell_value(row_index, 1)
+                    if ws.cell_value(row_index, 2) != '---':
+                        record["5Y"] = ws.cell_value(row_index, 2)
+                    else:
+                        record["5Y"] = None
+                    data.append( record )
+    except FileNotFoundError as ffe:
+        print( str(ffe) )   
 
-
-    # TODO 待实现
-    pass
+    # 更新数据库表 
 
 
 def get(date=None):
